@@ -1,7 +1,7 @@
-puts "Hola"
+require_relative 'lib/display'
 
-def saludar(nombre)
-  puts "Hola, #{nombre}!"
-end
+display = Display.new
 
-saludar("Mundo")
+board = ['X', 'O', 'X', ' ', 'X', ' ', 'O', ' ', 'O']
+
+display.show_board(board)
