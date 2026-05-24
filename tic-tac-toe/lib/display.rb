@@ -3,11 +3,11 @@
 # For displaying the tic-tac-toe board
 class Display
   def show_board(board)
-    puts '  A | B | C '
+    puts "  A | B | C "
     puts "1 #{board[0]} | #{board[1]} | #{board[2]} "
-    puts ' ---+---+---'
+    puts " ---+---+---"
     puts "2 #{board[3]} | #{board[4]} | #{board[5]} "
-    puts ' ---+---+---'
+    puts " ---+---+---"
     puts "3 #{board[6]} | #{board[7]} | #{board[8]} "
   end
 end
