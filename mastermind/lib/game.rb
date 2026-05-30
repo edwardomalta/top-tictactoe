@@ -1,3 +1,4 @@
+# Main class
 class Game
   def initialize
     @colors = %i[
@@ -13,14 +14,28 @@ class Game
     code
   end
 
-  def not_valid(input)
+  def not_valid?(input)
+    return true if input == ""
+
+    variable = interpreta input
+    return true if variable.nil?
+
     false
   end
 
-  def check_input(input)
-    return unless not_valid(input)
+  def interpreta(input)
+    result = input.split
+    return nil if result.any? { |i| i.length > 1 }
 
-    puts "Input not valid"
+    result
+  end
+
+  def check_input(input)
+    if not_valid?(input)
+      puts "Input not valid"
+      return
+    end
+    puts "Vale esto si vale"
   end
 
   def guess
