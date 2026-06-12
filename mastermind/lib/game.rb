@@ -5,6 +5,7 @@ class Game
     @colors = { 1 => "verde", 2 => "rosado", 3 => "azul", 4 => "amarillo", 5 => "rojo", 6 => "blanco" }
     @number_of_tries_left = 3
     @try_index = 0
+    @has_won = false
   end
 
   def gen_code
@@ -39,8 +40,6 @@ class Game
   end
 
   def guess
-    return unless @number_of_tries_left.positive?
-
     puts "Try number #{@try_index + 1}"
     puts "Intenta adivinar:"
     user_input = gets
@@ -50,7 +49,6 @@ class Game
 
     puts "Solo se tomarán cuatro valores (los primeros que usaste)"
     code_user = user_input.split.map { |a| a.to_i }
-    @number_of_tries_left -= 1
     @try_index += 1
 
     code_user.slice(0, 4)
@@ -98,6 +96,7 @@ class Game
 
   def user_wins
     puts "Congratulaciones ganador!"
+    @has_won = true
   end
 
   def start
@@ -106,15 +105,18 @@ class Game
     puts "Creeating code"
     code = gen_code
 
-    user_guess = guess
-
-    check_guess(code, user_guess)
+    loop do
+      user_guess = guess
+      check_guess(code, user_guess)
+      @number_of_tries_left -= 1
+      puts "Lastima... has perdido" if @number_of_tries_left < 1
+      puts @number_of_tries_left
+      break if @number_of_tries_left < 1 || @has_won
+    end
 
     puts "El codigo secreto"
     code.each { |peg| print "#{@colors[peg]} " }
     puts
     puts "--------------------------"
-    user_guess.each { |peg| print "#{@colors[peg]} " }
-    puts
   end
 end
