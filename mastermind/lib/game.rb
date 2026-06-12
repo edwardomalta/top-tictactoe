@@ -1,16 +1,15 @@
 # Main class
 class Game
   def initialize
-    @colors = %i[
-      verde rosado azul amarillo rojo blanco
-    ]
+    @choices = [1, 2, 3, 4, 5, 6]
+    @colors = { 1 => "verde", 2 => "rosado", 3 => "azul", 4 => "amarillo", 5 => "rojo", 6 => "blanco" }
     @number_of_tries_left = 3
     @try_index = 0
   end
 
   def gen_code
     code = []
-    4.times { code.append(@colors.sample) }
+    4.times { code.append(@choices.sample) }
     code
   end
 
@@ -24,8 +23,9 @@ class Game
   end
 
   def interpreta(input)
+    numbers = "1 2 3 4 5 6 7 8 9 0".split
     result = input.split
-    return nil if result.any? { |i| i.length > 1 }
+    return nil if result.any? { |i| true unless numbers.include?(i) }
 
     result
   end
@@ -46,9 +46,58 @@ class Game
     user_input = gets
 
     check_input(user_input)
+    return if not_valid?(user_input)
 
+    puts "Solo se tomarán cuatro valores (los primeros que usaste)"
+    code_user = user_input.split.map { |a| a.to_i }
     @number_of_tries_left -= 1
     @try_index += 1
+
+    code_user.slice(0, 4)
+  end
+
+  # TODO: implementar esta funcion
+  def check_guess(code, user_guess)
+    puts "Checando si coincide"
+    if code == user_guess
+      puts "Ganaste! Lo conseguiste, lo adivinaste!"
+      user_wins
+      return
+    end
+    puts "Nel, no coinciden peeero..."
+    check_if_any_color_is_in_code(code, user_guess)
+  end
+
+  def check_if_any_color_is_in_code(code, user_gess)
+    my_arr = []
+    my_char = ""
+    my_code = code
+    user_gess.each_with_index do |c, i|
+      if my_code.include?(c)
+        my_char = in_right_place?(c, i, my_code) ? "O" : "o"
+        my_arr.push my_char
+      else
+        my_arr.push "."
+      end
+    end
+    puts "Solo quiero ver si cambiaron o que son!"
+    puts ""
+    p my_arr.sort
+    puts ""
+    p my_code
+    my_arr.sort!
+  end
+
+  def in_right_place?(c, i, code)
+    if code.index(c) == i
+      code.replace(code.each_with_index { |x, index| index == i ? "done" : x })
+      return true
+    end
+    false
+  end
+
+  def user_wins
+    puts "Congratulaciones ganador!"
   end
 
   def start
@@ -57,8 +106,15 @@ class Game
     puts "Creeating code"
     code = gen_code
 
-    guess
+    user_guess = guess
 
-    puts code
+    check_guess(code, user_guess)
+
+    puts "El codigo secreto"
+    code.each { |peg| print "#{@colors[peg]} " }
+    puts
+    puts "--------------------------"
+    user_guess.each { |peg| print "#{@colors[peg]} " }
+    puts
   end
 end
