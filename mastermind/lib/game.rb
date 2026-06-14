@@ -1,3 +1,4 @@
+require "yaml"
 MAX_NUMBER_OF_TRIES = 3
 
 # Main class
@@ -42,29 +43,30 @@ class Game
   end
 
   def guess
-    puts "Try number #{@try_index + 1}"
-    puts "Intenta adivinar:"
+    puts "Intento número #{@try_index + 1}"
+    puts "Intenta adivinar, para hacerlo usa estos numeros separados por espacio representando el color"
+    puts @colors.to_yaml
+    print "Ingresa un código: "
     user_input = gets
 
-    check_input(user_input)
     return if not_valid?(user_input)
 
-    puts "Solo se tomarán cuatro valores (los primeros que usaste)"
+    # Solo se tomarán cuatro valores
     code_user = user_input.split.map { |a| a.to_i }
     @try_index += 1
-
     code_user.slice(0, 4)
   end
 
   def check_guess(code, user_guess)
-    puts "Checando si coincide"
+    puts "Checando si coincide..."
     if code == user_guess
       puts "Ganaste! Lo conseguiste, lo adivinaste!"
       user_wins
       return
     end
-    puts "Nel, no coinciden peeero..."
-    check_if_any_color_is_in_code(code, user_guess)
+    print "Nel, no coinciden peeero... [ "
+    print check_if_any_color_is_in_code(code, user_guess).join(" ")
+    puts " ]"
   end
 
   def check_if_any_color_is_in_code(code, user_gess)
@@ -79,11 +81,6 @@ class Game
         my_arr.push "."
       end
     end
-    puts "Solo quiero ver si cambiaron o que son!"
-    puts ""
-    p my_arr.sort
-    puts ""
-    p my_code
     my_arr.sort!
   end
 
@@ -100,20 +97,20 @@ class Game
     @has_won = true
   end
 
+  # main function of the game.
   def start
-    puts "starting..."
-
-    puts "Creeating code"
+    puts "Comenzamos..."
+    puts "La computadora selecciona un código super secreto..."
     code = gen_code
 
     loop do
       user_guess = guess
       check_guess(code, user_guess)
       @number_of_tries_left -= 1
-      puts "Lastima... has perdido" if @number_of_tries_left < 1
-      puts @number_of_tries_left
       break if @number_of_tries_left < 1 || @has_won
     end
+
+    puts "Lastima... has perdido" unless @has_won
 
     puts "El codigo secreto"
     code.each { |peg| print "#{@colors[peg]} " }
