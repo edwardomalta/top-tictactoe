@@ -97,24 +97,37 @@ class Game
     @has_won = true
   end
 
+  def user_guesser?
+    puts "Elije: a) Crear código; b) Adivinar"
+    respuesta = gets
+    p respuesta
+    return false if respuesta == "a\n"
+
+    true
+  end
+
   # main function of the game.
   def start
-    puts "Comenzamos..."
-    puts "La computadora selecciona un código super secreto..."
-    code = gen_code
+    if user_guesser?
+      puts "Comenzamos..."
+      puts "La computadora selecciona un código super secreto..."
+      code = gen_code
 
-    loop do
-      user_guess = guess
-      check_guess(code, user_guess)
-      @number_of_tries_left -= 1
-      break if @number_of_tries_left < 1 || @has_won
+      loop do
+        user_guess = guess
+        check_guess(code, user_guess)
+        @number_of_tries_left -= 1
+        break if @number_of_tries_left < 1 || @has_won
+      end
+
+      puts "Lastima... has perdido" unless @has_won
+
+      puts "El codigo secreto"
+      code.each { |peg| print "#{@colors[peg]} " }
+      puts
+      puts "--------------------------"
+    else
+      puts "Entonces ... que numero elejiste?"
     end
-
-    puts "Lastima... has perdido" unless @has_won
-
-    puts "El codigo secreto"
-    code.each { |peg| print "#{@colors[peg]} " }
-    puts
-    puts "--------------------------"
   end
 end
