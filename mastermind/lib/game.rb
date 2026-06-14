@@ -1,9 +1,11 @@
+MAX_NUMBER_OF_TRIES = 3
+
 # Main class
 class Game
   def initialize
     @choices = [1, 2, 3, 4, 5, 6]
     @colors = { 1 => "verde", 2 => "rosado", 3 => "azul", 4 => "amarillo", 5 => "rojo", 6 => "blanco" }
-    @number_of_tries_left = 3
+    @number_of_tries_left = MAX_NUMBER_OF_TRIES
     @try_index = 0
     @has_won = false
   end
@@ -54,7 +56,6 @@ class Game
     code_user.slice(0, 4)
   end
 
-  # TODO: implementar esta funcion
   def check_guess(code, user_guess)
     puts "Checando si coincide"
     if code == user_guess
