@@ -115,31 +115,32 @@ class Game
   end
 
   def user_code
-    puts "Selecciona un codigo de cuatro colores:"
     puts @colors.to_yaml
+    print "Selecciona un codigo de cuatro colores: "
     gets
+  end
+
+  def guess_cycle
+    loop do
+      user_guess = guess
+      check_guess(user_guess)
+      @number_of_tries_left -= 1
+      break if @number_of_tries_left < 1 || @has_won
+    end
   end
 
   # main function of the game.
   def start
     puts "Comenzamos..."
     @code = user_guesser? ? computer_code : user_code
-    if user_guesser?
-      loop do
-        user_guess = guess
-        check_guess(user_guess)
-        @number_of_tries_left -= 1
-        break if @number_of_tries_left < 1 || @has_won
-      end
 
-      puts "Lastima... has perdido" unless @has_won
+    guess_cycle if user_guesser?
 
-      puts "El codigo secreto"
-      @code.each { |peg| print "#{@colors[peg]} " }
-      puts
-      puts "--------------------------"
-    else
-      puts "Entonces ... que numero elejiste?"
-    end
+    puts "Lastima... has perdido" unless @has_won
+
+    puts "El codigo secreto"
+    @code.each { |peg| print "#{@colors[peg]} " }
+    puts
+    puts "--------------------------"
   end
 end
