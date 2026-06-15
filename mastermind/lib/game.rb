@@ -74,6 +74,8 @@ class Game
     my_arr = []
     my_char = ""
     my_code = @code
+    puts "DEBUG:"
+    p user_gess
     user_gess.each_with_index do |c, i|
       if my_code.include?(c)
         my_char = in_right_place?(c, i, my_code) ? "O" : "o"
@@ -117,16 +119,23 @@ class Game
   def user_code
     puts @colors.to_yaml
     print "Selecciona un codigo de cuatro colores: "
-    gets
+    result = gets
+    result.split.map { |x| x.to_i }
   end
 
   def guess_cycle
     loop do
-      user_guess = guess
-      check_guess(user_guess)
+      player_guess = user_guesser? ? guess : computer_guesser_v1
+      check_guess(player_guess)
       @number_of_tries_left -= 1
       break if @number_of_tries_left < 1 || @has_won
     end
+  end
+
+  # May be this is going to be in other class:
+  def computer_guesser_v1
+    # gen_code.map { |x| x.to_s }
+    gen_code
   end
 
   # main function of the game.
@@ -134,7 +143,7 @@ class Game
     puts "Comenzamos..."
     @code = user_guesser? ? computer_code : user_code
 
-    guess_cycle if user_guesser?
+    guess_cycle
 
     puts "Lastima... has perdido" unless @has_won
 
