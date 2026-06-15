@@ -131,6 +131,7 @@ class Game
   # May be this is going to be in other class:
   def computer_guesser_v1
     # gen_code.map { |x| x.to_s }
+    @computer_player.pensar
     @computer_player.gen_code
   end
 
