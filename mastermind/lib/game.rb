@@ -1,4 +1,5 @@
 require "yaml"
+require_relative "computer_player"
 MAX_NUMBER_OF_TRIES = 3
 
 # Main class
@@ -10,12 +11,7 @@ class Game
     @try_index = 0
     @has_won = false
     @user_role = ""
-  end
-
-  def gen_code
-    code = []
-    4.times { code.append(@choices.sample) }
-    code
+    @computer_player = ComputerPlayer.new(@colors)
   end
 
   def not_valid?(input)
@@ -65,17 +61,17 @@ class Game
       user_wins
       return
     end
+    feedback = check_if_any_color_is_in_code(user_guess)
     print "Nel, no coinciden peeero... [ "
-    print check_if_any_color_is_in_code(user_guess).join(" ")
+    print feedback.join(" ")
     puts " ]"
+    @computer_player.feedback(feedback)
   end
 
   def check_if_any_color_is_in_code(user_gess)
     my_arr = []
     my_char = ""
     my_code = @code
-    puts "DEBUG:"
-    p user_gess
     user_gess.each_with_index do |c, i|
       if my_code.include?(c)
         my_char = in_right_place?(c, i, my_code) ? "O" : "o"
@@ -113,7 +109,7 @@ class Game
 
   def computer_code
     puts "La computadora ha seleccionado un código super secreto..."
-    gen_code
+    @computer_player.gen_code
   end
 
   def user_code
@@ -135,7 +131,7 @@ class Game
   # May be this is going to be in other class:
   def computer_guesser_v1
     # gen_code.map { |x| x.to_s }
-    gen_code
+    @computer_player.gen_code
   end
 
   # main function of the game.
