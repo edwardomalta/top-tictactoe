@@ -116,7 +116,7 @@ class Game
     puts @colors.to_yaml
     print "Selecciona un codigo de cuatro colores: "
     result = gets
-    result.split.map { |x| x.to_i }
+    result.split.map(&:to_i)
   end
 
   def guess_cycle
