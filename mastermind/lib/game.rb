@@ -9,6 +9,7 @@ class Game
     @number_of_tries_left = MAX_NUMBER_OF_TRIES
     @try_index = 0
     @has_won = false
+    @user_role = ""
   end
 
   def gen_code
@@ -57,22 +58,22 @@ class Game
     code_user.slice(0, 4)
   end
 
-  def check_guess(code, user_guess)
+  def check_guess(user_guess)
     puts "Checando si coincide..."
-    if code == user_guess
+    if @code == user_guess
       puts "Ganaste! Lo conseguiste, lo adivinaste!"
       user_wins
       return
     end
     print "Nel, no coinciden peeero... [ "
-    print check_if_any_color_is_in_code(code, user_guess).join(" ")
+    print check_if_any_color_is_in_code(user_guess).join(" ")
     puts " ]"
   end
 
-  def check_if_any_color_is_in_code(code, user_gess)
+  def check_if_any_color_is_in_code(user_gess)
     my_arr = []
     my_char = ""
-    my_code = code
+    my_code = @code
     user_gess.each_with_index do |c, i|
       if my_code.include?(c)
         my_char = in_right_place?(c, i, my_code) ? "O" : "o"
@@ -97,25 +98,36 @@ class Game
     @has_won = true
   end
 
-  def user_guesser?
-    puts "Elije: a) Crear código; b) Adivinar"
+  def set_user_role
+    print "Elije: a) Crear código; b) Adivinar: "
     respuesta = gets
-    p respuesta
-    return false if respuesta == "a\n"
+    @user_role = respuesta == "a\n" ? "coder" : "broker"
+  end
 
-    true
+  def user_guesser?
+    set_user_role if @user_role == ""
+    @user_role == "broker"
+  end
+
+  def computer_code
+    puts "La computadora ha seleccionado un código super secreto..."
+    gen_code
+  end
+
+  def user_code
+    puts "Selecciona un codigo de cuatro colores:"
+    puts @colors.to_yaml
+    gets
   end
 
   # main function of the game.
   def start
+    puts "Comenzamos..."
+    @code = user_guesser? ? computer_code : user_code
     if user_guesser?
-      puts "Comenzamos..."
-      puts "La computadora selecciona un código super secreto..."
-      code = gen_code
-
       loop do
         user_guess = guess
-        check_guess(code, user_guess)
+        check_guess(user_guess)
         @number_of_tries_left -= 1
         break if @number_of_tries_left < 1 || @has_won
       end
@@ -123,7 +135,7 @@ class Game
       puts "Lastima... has perdido" unless @has_won
 
       puts "El codigo secreto"
-      code.each { |peg| print "#{@colors[peg]} " }
+      @code.each { |peg| print "#{@colors[peg]} " }
       puts
       puts "--------------------------"
     else
