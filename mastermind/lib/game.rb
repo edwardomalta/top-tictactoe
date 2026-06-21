@@ -71,7 +71,7 @@ class Game
   def check_if_any_color_is_in_code(user_gess)
     my_arr = []
     my_char = ""
-    my_code = @code
+    my_code = @code.dup
     user_gess.each_with_index do |c, i|
       if my_code.include?(c)
         my_char = in_right_place?(c, i, my_code) ? "O" : "o"
