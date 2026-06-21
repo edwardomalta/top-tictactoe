@@ -1,6 +1,6 @@
 require "yaml"
 require_relative "computer_player"
-MAX_NUMBER_OF_TRIES = 3
+MAX_NUMBER_OF_TRIES = 15
 
 # Main class
 class Game
@@ -65,7 +65,7 @@ class Game
     print "Nel, no coinciden peeero... [ "
     print feedback.join(" ")
     puts " ]"
-    @computer_player.feedback(feedback)
+    @computer_player.feedback({ feedback: feedback, code: user_guess })
   end
 
   def check_if_any_color_is_in_code(user_gess)
@@ -132,7 +132,7 @@ class Game
   def computer_guesser_v1
     # gen_code.map { |x| x.to_s }
     @computer_player.pensar
-    @computer_player.gen_code
+    @computer_player.deduce_code
   end
 
   # main function of the game.
