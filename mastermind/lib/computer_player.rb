@@ -16,7 +16,7 @@ class ComputerPlayer
     result = []
     if @last_feedback
       puts "Si hay last..."
-      puts @starting_combitations.sample
+      result = @starting_combitations.sample
     else
       puts "no no hay...."
       result = @starting_combitations.sample

@@ -65,7 +65,8 @@ class Game
     print "Nel, no coinciden peeero... [ "
     print feedback.join(" ")
     puts " ]"
-    @computer_player.feedback({ feedback: feedback, code: user_guess })
+
+    @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup })
   end
 
   def check_if_any_color_is_in_code(user_gess)
