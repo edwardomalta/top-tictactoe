@@ -72,24 +72,15 @@ class Game
   def check_if_any_color_is_in_code(user_gess)
     my_arr = []
     my_char = ""
-    my_code = @code.dup
-    user_gess.each_with_index do |c, i|
-      if my_code.include?(c)
-        my_char = in_right_place?(c, i, my_code) ? "O" : "o"
+    user_gess.each_with_index do |color, index|
+      if @code.include?(color)
+        my_char = @code[index] == color ? "O" : "o"
         my_arr.push my_char
       else
         my_arr.push "."
       end
     end
     my_arr.sort!
-  end
-
-  def in_right_place?(c, i, code)
-    if code.index(c) == i
-      code.replace(code.each_with_index { |x, index| index == i ? "done" : x })
-      return true
-    end
-    false
   end
 
   def user_wins
