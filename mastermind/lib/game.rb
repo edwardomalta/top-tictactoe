@@ -61,7 +61,7 @@ class Game
       user_wins
       return
     end
-    feedback = check_if_any_color_is_in_code(user_guess)
+    feedback = get_feedback(user_guess)
     print "Nel, no coinciden peeero... [ "
     print feedback.join(" ")
     puts " ]"
@@ -69,10 +69,16 @@ class Game
     @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup })
   end
 
-  def check_if_any_color_is_in_code(user_gess)
+  # The rule says:
+  # After the codebreaker makes a guess, the code maker checks their code and places key pegs.
+  # A white peg means 1 guessed peg is the correct color, but is in the wrong position.
+  # A red peg means 1 guessed peg is the correct color and in the correct position.
+  # No peg means that a guessed peg is not a part of the code.
+  # Here I use "." for empty, "o" for correct color but wrong place, and "O" for correct color and place.
+  def get_feedback(user_guess)
     my_arr = []
     my_char = ""
-    user_gess.each_with_index do |color, index|
+    user_guess.each_with_index do |color, index|
       if @code.include?(color)
         my_char = @code[index] == color ? "O" : "o"
         my_arr.push my_char
