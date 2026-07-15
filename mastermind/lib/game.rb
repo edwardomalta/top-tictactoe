@@ -4,7 +4,8 @@ MAX_NUMBER_OF_TRIES = 15
 
 # Main class
 class Game
-  def initialize
+  def initialize(debug=false)
+    @debug = debug
     @choices = [1, 2, 3, 4, 5, 6]
     @colors = { 1 => "verde", 2 => "rosado", 3 => "azul", 4 => "amarillo", 5 => "rojo", 6 => "blanco" }
     @number_of_tries_left = MAX_NUMBER_OF_TRIES
@@ -126,6 +127,10 @@ class Game
     end
   end
 
+  def guess_cycle_debug
+    puts "Aqui intentando debuggear"
+  end
+
   # May be this is going to be in other class:
   def computer_guesser_v1
     # gen_code.map { |x| x.to_s }
@@ -135,16 +140,25 @@ class Game
 
   # main function of the game.
   def start
-    puts "Comenzamos..."
-    @code = user_guesser? ? computer_code : user_code
+    if @debug
+      puts "tamos probando"
+      guess_cycle_debug
+    else
+      puts "Comenzamos..."
+      @code = user_guesser? ? computer_code : user_code
+      guess_cycle
+    end
 
-    guess_cycle
 
     puts "Lastima... has perdido" unless @has_won
 
-    puts "El codigo secreto"
-    @code.each { |peg| print "#{@colors[peg]} " }
-    puts
-    puts "--------------------------"
+    if @codigo  
+      puts "El codigo secreto"
+      @code.each { |peg| print "#{@colors[peg]} " }
+      puts
+      puts "--------------------------"
+    else
+      puts "No hay nimaiz"
+    end
   end
 end
