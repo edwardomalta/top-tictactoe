@@ -4,7 +4,7 @@ MAX_NUMBER_OF_TRIES = 15
 
 # Main class
 class Game
-  def initialize(debug=false)
+  def initialize(debug: false)
     @debug = debug
     @choices = [1, 2, 3, 4, 5, 6]
     @colors = { 1 => "verde", 2 => "rosado", 3 => "azul", 4 => "amarillo", 5 => "rojo", 6 => "blanco" }
