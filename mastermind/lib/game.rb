@@ -112,7 +112,7 @@ class Game
   end
 
   def user_code
-    puts @colors.to_yaml
+    puts @colors.to_yaml if @try_index == MAX_NUMBER_OF_TRIES
     print "Selecciona un codigo de cuatro colores: "
     result = gets
     result.split.map(&:to_i)
