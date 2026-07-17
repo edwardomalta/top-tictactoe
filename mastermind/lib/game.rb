@@ -149,10 +149,9 @@ class Game
       guess_cycle
     end
 
-
     puts "Lastima... has perdido" unless @has_won
 
-    if @codigo  
+    if @code
       puts "El codigo secreto"
       @code.each { |peg| print "#{@colors[peg]} " }
       puts
