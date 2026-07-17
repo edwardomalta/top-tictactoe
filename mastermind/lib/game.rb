@@ -67,7 +67,7 @@ class Game
     print feedback.join(" ")
     puts " ]"
 
-    @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup })
+    @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup }) unless user_guesser?
   end
 
   # The rule says:
