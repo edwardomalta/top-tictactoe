@@ -58,8 +58,13 @@ class Game
   def check_guess(user_guess)
     puts "Checando si coincide..."
     if @code == user_guess
-      puts "Ganaste! Lo conseguiste, lo adivinaste!"
-      user_wins
+      message = user_guesser? ? "Ganaste! hurray!" : "Haz perdido! La computadora lo adivino!"
+      puts message
+      if user_guess?
+        user_wins
+      else
+        computer_wins
+      end
       return
     end
     feedback = get_feedback(user_guess)
@@ -95,6 +100,10 @@ class Game
     @has_won = true
   end
 
+  def computer_wins
+    @has_won = true
+  end
+
   def set_user_role
     print "Elije: a) Crear código; b) Adivinar: "
     respuesta = gets
@@ -108,6 +117,10 @@ class Game
 
   def computer_code
     puts "La computadora ha seleccionado un código super secreto..."
+    @computer_player.gen_code
+  end
+
+  def debug_code
     @computer_player.gen_code
   end
 
@@ -128,7 +141,12 @@ class Game
   end
 
   def guess_cycle_debug
-    puts "Aqui intentando debuggear"
+    loop do
+      player_guess = computer_guesser_v1 # obtenemos el dato generado por esta cosita
+      check_guess(player_guess)
+      @number_of_tries_left -= 1
+      break if @number_of_tries_left < 1 || @has_won
+    end
   end
 
   # May be this is going to be in other class:
@@ -142,6 +160,8 @@ class Game
   def start
     if @debug
       puts "tamos probando"
+      # Generamos un codigo
+      debug_code() 
       guess_cycle_debug
     else
       puts "Comenzamos..."
@@ -149,7 +169,11 @@ class Game
       guess_cycle
     end
 
-    puts "Lastima... has perdido" unless @has_won
+    if user_guesser?
+      puts "Lastima... has perdido" unless @has_won
+    else
+      puts "Ganaste! la computadora no pudo adivinar!" unless @has_won
+    end
 
     if @code
       puts "El codigo secreto"
