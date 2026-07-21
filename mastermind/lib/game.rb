@@ -60,7 +60,7 @@ class Game
     if @code == user_guess
       message = user_guesser? ? "Ganaste! hurray!" : "Haz perdido! La computadora lo adivino!"
       puts message
-      if user_guess?
+      if user_guesser?
         user_wins
       else
         computer_wins
