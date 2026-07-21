@@ -162,7 +162,7 @@ class Game
     if @debug
       puts "tamos probando"
       # Generamos un codigo
-      debug_code() 
+      debug_code
       guess_cycle_debug
     else
       puts "Comenzamos..."
