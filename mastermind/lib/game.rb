@@ -121,7 +121,8 @@ class Game
   end
 
   def debug_code
-    @computer_player.gen_code
+    @code = @computer_player.gen_code
+    puts "El codigo seleccionado es: #{@code}"
   end
 
   def user_code
@@ -155,6 +156,7 @@ class Game
     # gen_code.map { |x| x.to_s }
     if @debug
       @computer_player.pensar
+      @computer_player.deduce_method
     else
       @computer_player.deduce_code
     end

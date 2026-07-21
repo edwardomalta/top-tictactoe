@@ -24,6 +24,11 @@ class ComputerPlayer
     result
   end
 
+  def deduce_method
+    # Aqui va a ir el nuevo modelo de deducción
+    [1, 1, 2, 2]
+  end
+
   def feedback(result)
     # No se si quiero esto
     @last_feedback ||= []
