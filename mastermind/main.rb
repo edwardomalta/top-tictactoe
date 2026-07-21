@@ -1,5 +1,5 @@
 require_relative "lib/game"
 
-game = Game.new(debug: false)
+game = Game.new(debug: true)
 
 game.start
