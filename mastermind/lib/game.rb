@@ -58,8 +58,10 @@ class Game
   def check_guess(user_guess)
     puts "Checando si coincide..."
     if @code == user_guess
+      # Lo mismo pasa aqui
       message = user_guesser? ? "Ganaste! hurray!" : "Haz perdido! La computadora lo adivino!"
       puts message
+      # Y aqui, en ninguna estoy buscando asignar rol, pero lo hago
       if user_guesser?
         user_wins
       else
@@ -72,7 +74,7 @@ class Game
     print feedback.join(" ")
     puts " ]"
 
-    @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup }) unless user_guesser?
+    @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup }) unless user_guesser? # Y aqui también!
   end
 
   # The rule says:
@@ -111,6 +113,8 @@ class Game
   end
 
   def user_guesser?
+    # Definitivamente lo que sigue no debería existir.
+    # En tonces donde lo pongo?
     set_user_role if @user_role == ""
     @user_role == "broker"
   end
@@ -135,6 +139,9 @@ class Game
 
   def guess_cycle
     loop do
+      # Aqui pretendo saber si el usuario es coder o breaker.
+      # Lo que hago es peresozamente, que si no se ha tomado esta desición
+      # que se tome ahora
       player_guess = user_guesser? ? guess : computer_guesser_v1
       check_guess(player_guess)
       @number_of_tries_left -= 1
