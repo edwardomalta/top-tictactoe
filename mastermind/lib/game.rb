@@ -4,6 +4,8 @@ MAX_NUMBER_OF_TRIES = 15
 
 # Main class
 class Game
+  attr_accessor :code
+
   def initialize(debug: false)
     @debug = debug
     @choices = [1, 2, 3, 4, 5, 6]
