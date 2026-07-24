@@ -41,12 +41,9 @@ class ComputerPlayer
     # Aqui va a ir el nuevo modelo de deducción
     # Debe retornar una lista de enteros limitada a 1-6
     # Contar los intentos para distinguir el primero.
-    if first_try?
-      puts "First try detected"
-      starting_code = gen_code
-    end
+    puts "First try detected" if first_try?
     @intent_number += 1
-    code_deduced = first_try? ? starting_code : think_on_evidence
+    code_deduced = first_try? ? gen_code : think_on_evidence
     return code_deduced
   end
 
