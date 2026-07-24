@@ -33,7 +33,13 @@ class ComputerPlayer
 
   def think_on_evidence
     # TODO implement this
-    puts "Aun no implementeado, devolviendo randomm code"
+    if @intent_number <= 1
+      new_guess = @last_feedback[-1][:code]
+      new_guess[-1] += new_guess < 5 ? -5 : 1
+      return new_guess
+    end
+    # A partir de aqui, podemos comparar si el cambio anterior trajo datos nuevos o no
+    puts "Segundo intento?"
     gen_code
   end
 
