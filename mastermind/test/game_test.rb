@@ -56,3 +56,23 @@ class TestNewDeduceMethod < Minitest::Test
     refute_equal last_number, processed_last_number, "they must be different"
   end
 end
+
+class TurnsUsedToBreak < Minitest::Test
+  # Interesante el concepto pero ¿cómo se hace?
+  def test_how_much_turns_takes_the_current_version_of_the_algorithm_to_break
+    game = Game.new(debug: true)
+    game.code = [2, 3, 4, 4]
+    colors = game.colors
+    computer_player = ComputerPlayer.new(colors)
+
+    counter = 1
+    while not game.has_won do
+      result = game.check_guess(computer_player.deduce_method).first
+      computer_player.feedback(result)
+      counter += 1
+      break if counter > 1000
+    end
+
+    puts "#{counter} intentos"
+  end
+end
