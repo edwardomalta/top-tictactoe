@@ -34,7 +34,7 @@ class ComputerPlayer
   def think_on_evidence
     # TODO implement this
     if @intent_number < 1
-      new_guess = @last_feedback[-1][:code].dup
+      new_guess = @feedback[-1][:code].dup
       new_guess[-1] += new_guess[-1] < 5 ? -5 : 1
       return new_guess
     end
@@ -55,10 +55,10 @@ class ComputerPlayer
 
   def feedback(result)
     # No se si quiero esto
-    @last_feedback ||= []
-    @last_feedback.append(result)
+    @feedback ||= []
+    @feedback.append(result)
     puts "mames que voy a hacer con esta data?"
-    p @last_feedback
+    p @feedback
   end
 
   def gen_combinations(current, position, max)
