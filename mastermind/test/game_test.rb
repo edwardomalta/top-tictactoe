@@ -34,4 +34,15 @@ class TestNewDeduceMethod < Minitest::Test
 
     assert_equal 1, computer_player.intent_number
   end
+  def test_it_detects_second_try
+    game = Game.new
+    colors = game.colors
+    computer_player = ComputerPlayer.new(colors)
+    # intento 1
+    computer_player.deduce_method
+    # intento 2
+    computer_player.deduce_method
+
+    assert_equal 2, computer_player.intent_number
+  end
 end

@@ -33,9 +33,9 @@ class ComputerPlayer
 
   def think_on_evidence
     # TODO implement this
-    if @intent_number <= 1
-      new_guess = @last_feedback[-1][:code]
-      new_guess[-1] += new_guess < 5 ? -5 : 1
+    if @intent_number < 1
+      new_guess = @last_feedback[-1][:code].dup
+      new_guess[-1] += new_guess[-1] < 5 ? -5 : 1
       return new_guess
     end
     # A partir de aqui, podemos comparar si el cambio anterior trajo datos nuevos o no
@@ -48,8 +48,8 @@ class ComputerPlayer
     # Debe retornar una lista de enteros limitada a 1-6
     # Contar los intentos para distinguir el primero.
     puts "First try detected" if first_try?
-    @intent_number += 1
     code_deduced = first_try? ? gen_code : think_on_evidence
+    @intent_number += 1
     return code_deduced
   end
 
