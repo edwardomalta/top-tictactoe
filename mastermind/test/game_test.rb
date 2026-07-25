@@ -34,15 +34,25 @@ class TestNewDeduceMethod < Minitest::Test
 
     assert_equal 1, computer_player.intent_number
   end
+
   def test_it_detects_second_try
     game = Game.new
+    game.code = [1, 1, 2, 2]
     colors = game.colors
     computer_player = ComputerPlayer.new(colors)
+
     # intento 1
-    computer_player.deduce_method
+    first_try_code = computer_player.deduce_method.dup
+    result = game.check_guess(first_try_code).first
+    last_number = first_try_code.pop
+    computer_player.feedback(result)
+
     # intento 2
-    computer_player.deduce_method
+    second_try_code = computer_player.deduce_method.dup
+    processed_last_number = second_try_code.pop
 
     assert_equal 2, computer_player.intent_number
+    assert_equal first_try_code, second_try_code
+    refute_equal last_number, processed_last_number, "they must be different"
   end
 end

@@ -31,16 +31,20 @@ class ComputerPlayer
     @intent_number < 1
   end
 
+  def get_last_feedback
+    @feedback[-1][:feedback].dup
+  end
+
+  def get_last_code_used
+    @feedback[-1][:code].dup
+  end
+
   def think_on_evidence
     # TODO implement this
-    if @intent_number < 1
-      new_guess = @feedback[-1][:code].dup
-      new_guess[-1] += new_guess[-1] < 5 ? -5 : 1
-      return new_guess
-    end
-    # A partir de aqui, podemos comparar si el cambio anterior trajo datos nuevos o no
     puts "Segundo intento?"
-    gen_code
+    new_guess = get_last_code_used
+    new_guess[-1] += new_guess[-1] < 5 ? -5 : 1
+    return new_guess
   end
 
   def deduce_method
