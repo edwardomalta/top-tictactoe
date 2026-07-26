@@ -4,9 +4,7 @@ MAX_NUMBER_OF_TRIES = 15
 
 # Main class
 class Game
-  attr_accessor :code
-  attr_accessor :colors
-  attr_accessor :has_won
+  attr_accessor :code, :colors, :has_won
 
   def initialize(debug: false)
     @debug = debug

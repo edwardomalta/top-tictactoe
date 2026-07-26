@@ -43,10 +43,8 @@ class ComputerPlayer
 
   def think_on_evidence
     # Second attempt or more
-    if @intent_number <= 2
-      new_guess = get_last_code_used
-      new_guess[-1] += new_guess[-1] < 5 ? -5 : 1
-    end
+    new_guess = get_last_code_used
+    new_guess[-1] += new_guess[-1] < 5 ? -5 : 1
     # On 3 attempt we can deduce something
     # COMPARE THIS: cnt. of "o", "O", "." from @feedback[-2][:feedback]
     # agaisnt the same fromm @feedback[-1][:feedback]
@@ -57,7 +55,7 @@ class ComputerPlayer
     # if nothing changes both numbers are not in the code
     # here we switch positions with adjacent (moving what we know is not in the combination).
     # make the same comparison than before but now index is -2
-    gen_code
+    return new_guess
   end
 
   def deduce_method

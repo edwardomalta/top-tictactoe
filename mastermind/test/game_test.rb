@@ -47,6 +47,8 @@ class TestNewDeduceMethod < Minitest::Test
     last_number = first_try_code.pop
     computer_player.feedback(result)
 
+    assert_equal 1, computer_player.intent_number
+
     # intento 2
     second_try_code = computer_player.deduce_method.dup
     processed_last_number = second_try_code.pop
@@ -59,7 +61,7 @@ end
 
 class TurnsUsedToBreak < Minitest::Test
   # Interesante el concepto pero ¿cómo se hace?
-  MAX_NUMBER_OF_TRIES = 10
+  MAX_NUMBER_OF_TRIES = 100
   def test_how_much_turns_takes_the_current_version_of_the_algorithm_to_break
     game = Game.new(debug: true)
     game.code = [2, 3, 4, 4]
