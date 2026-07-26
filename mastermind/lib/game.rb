@@ -60,10 +60,10 @@ class Game
   end
 
   def check_guess(user_guess)
-    puts "Checando si coincide..."
+    puts "Checando si coincide..." unless @debug
     if @code == user_guess
       message = user_guesser? ? "Ganaste! hurray!" : "Haz perdido! La computadora lo adivino!"
-      puts message
+      puts message unless @debug
       if user_guesser?
         user_wins
       else
@@ -72,9 +72,9 @@ class Game
       return
     end
     feedback = get_feedback(user_guess)
-    print "Nel, no coinciden peeero... [ "
-    print feedback.join(" ")
-    puts " ]"
+    print "Nel, no coinciden peeero... [ " unless @debug
+    print feedback.join(" ") unless @debug
+    puts " ]" unless @debug
 
     @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup }) unless user_guesser?
   end

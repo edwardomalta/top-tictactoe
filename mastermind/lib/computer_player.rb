@@ -2,11 +2,12 @@
 class ComputerPlayer
   attr_accessor :intent_number
 
-  def initialize(colors)
+  def initialize(colors, debug: false)
     @colors = colors
     @combinations = gen_combinations(Array.new(4, 0), 0, 6)
     @starting_combitations = [[1, 1, 2, 2], [1, 1, 2, 3], [1, 1, 3, 4]]
     @intent_number = 0
+    @debug = debug
   end
 
   def gen_code
@@ -61,8 +62,8 @@ class ComputerPlayer
     # No se si quiero esto
     @feedback ||= []
     @feedback.append(result)
-    puts "mames que voy a hacer con esta data?"
-    p @feedback
+    # puts "mames que voy a hacer con esta data?" unless @debug
+    # p @feedback unless @debug
   end
 
   def gen_combinations(current, position, max)
