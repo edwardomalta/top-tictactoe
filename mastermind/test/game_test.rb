@@ -66,7 +66,7 @@ class TurnsUsedToBreak < Minitest::Test
     colors = game.colors
     computer_player = ComputerPlayer.new(colors, debug: true)
 
-    counter = 1
+    counter = 0
     while not game.has_won do
       result = game.check_guess(computer_player.deduce_method).first
       computer_player.feedback(result)
