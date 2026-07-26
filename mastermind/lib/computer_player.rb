@@ -57,6 +57,7 @@ class ComputerPlayer
     # if nothing changes both numbers are not in the code
     # here we switch positions with adjacent (moving what we know is not in the combination).
     # make the same comparison than before but now index is -2
+    gen_code
   end
 
   def deduce_method
