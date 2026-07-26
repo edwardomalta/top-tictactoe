@@ -59,11 +59,8 @@ class ComputerPlayer
   end
 
   def feedback(result)
-    # No se si quiero esto
     @feedback ||= []
     @feedback.append(result)
-    # puts "mames que voy a hacer con esta data?" unless @debug
-    # p @feedback unless @debug
   end
 
   def gen_combinations(current, position, max)
