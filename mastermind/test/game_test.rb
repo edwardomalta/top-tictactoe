@@ -15,7 +15,7 @@ end
 # My game, my rules!
 class TestFeedbackRule < Minitest::Test
   def test_my_rule
-    game = Game.new
+    game = Game.new(debug: true)
     game.code = [1, 1, 2, 2]
     player_guess = [1, 1, 1, 1]
     result = game.check_guess(player_guess)
@@ -27,7 +27,7 @@ end
 
 class TestNewDeduceMethod < Minitest::Test
   def test_it_detects_first_try
-    game = Game.new
+    game = Game.new(debug: true)
     colors = game.colors
     computer_player = ComputerPlayer.new(colors)
     computer_player.deduce_method
@@ -36,7 +36,7 @@ class TestNewDeduceMethod < Minitest::Test
   end
 
   def test_it_detects_second_try
-    game = Game.new
+    game = Game.new(debug: true)
     game.code = [1, 1, 2, 2]
     colors = game.colors
     computer_player = ComputerPlayer.new(colors)
@@ -67,13 +67,15 @@ class TurnsUsedToBreak < Minitest::Test
     computer_player = ComputerPlayer.new(colors, debug: true)
 
     counter = 0
-    while not game.has_won do
+    until game.has_won do
       result = game.check_guess(computer_player.deduce_method).first
       computer_player.feedback(result)
       counter += 1
+
+      assert_includes computer_player.candidates, game.code,
+                      "filtering is excluding the code at attempt number #{counter}"
       break if counter > MAX_NUMBER_OF_TRIES
     end
-
-    puts "#{counter} intentos"
+     assert game.has_won, "Did not broke the code in #{MAX_NUMBER_OF_TRIES} tries"
   end
 end

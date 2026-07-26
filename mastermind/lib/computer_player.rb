@@ -1,6 +1,6 @@
 # Jugador "Artificial"
 class ComputerPlayer
-  attr_accessor :intent_number
+  attr_accessor :intent_number, :candidates
 
   def initialize(colors, debug: false)
     @colors = colors
@@ -8,6 +8,7 @@ class ComputerPlayer
     @starting_combitations = [[1, 1, 2, 2], [1, 1, 2, 3], [1, 1, 3, 4]]
     @intent_number = 0
     @debug = debug
+    @candidates = @combinations.dup
   end
 
   def gen_code
@@ -41,8 +42,7 @@ class ComputerPlayer
   end
 
   def think_on_evidence
-    # TODO implement this
-    puts "Segundo intento?"
+    # Second attempt or more
     new_guess = get_last_code_used
     new_guess[-1] += new_guess[-1] < 5 ? -5 : 1
     return new_guess
@@ -52,7 +52,7 @@ class ComputerPlayer
     # Aqui va a ir el nuevo modelo de deducción
     # Debe retornar una lista de enteros limitada a 1-6
     # Contar los intentos para distinguir el primero.
-    puts "First try detected" if first_try?
+    # puts "First try detected" if first_try?
     code_deduced = first_try? ? gen_code : think_on_evidence
     @intent_number += 1
     return code_deduced
