@@ -49,8 +49,17 @@ class ComputerPlayer
   end
 
   def pick_next_code
-    last_code = get_last_guess
-    last_code[@code_pos_index] += last_code[@code_pos_index] < 5 ? -5 : 1
+    last_code = get_last_guess.dup
+    color = last_code[@code_pos_index]
+    puts "color = #{last_code[@code_pos_index]}"
+    last_code[@code_pos_index] = rotate_color(color)
+    puts "last_code = #{last_code}"
+    return last_code
+  end
+
+  def rotate_color(color)
+    amount = color > 5 ? -5 : 1
+    return color + amount
   end
 
   def think_on_evidence
@@ -84,6 +93,7 @@ class ComputerPlayer
       end
     end
     new_guess = pick_next_code
+    puts "new_guess = #{new_guess}"
     # Creo que todo está muy bonito pero, aunque sea un minimo metodo de fuerza bruta
     # y probar que las posiciones fijadas sean las que tienen que ser, eso estaría cool.
     # Entonces una forma tonta de hacerlo: correr en bucle hasta encontrar un O.
