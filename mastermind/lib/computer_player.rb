@@ -48,7 +48,7 @@ class ComputerPlayer
 
   def pick_next_code
     last_code = get_last_guess
-    last_code[@code_pos_index] + last_code[@code_pos_index] < 5 ? -5 : 1
+    last_code[@code_pos_index] += last_code[@code_pos_index] < 5 ? -5 : 1
   end
 
   def think_on_evidence
@@ -72,8 +72,8 @@ class ComputerPlayer
     # if nothing changes both numbers are not in the code
     # here we switch positions with adjacent (moving what we know is not in the combination).
     # make the same comparison than before but now index is -2
-    old_color = get_old_color
-    last_color = get_last_color
+    # old_color = get_old_color
+    # last_color = get_last_color
     if @intent_number > 2 # for all the rest of tries there is info to compare
       case compare_feedback
       when 3
