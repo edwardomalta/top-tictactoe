@@ -38,6 +38,10 @@ class ComputerPlayer
     @feedback[-1][:feedback].dup
   end
 
+  def get_old_feedback
+    @feedback[-2][:feedback].dup
+  end
+
   def get_last_guess
     puts "feedback = #{@feedback}"
     puts "intent_number = #{@intent_number}"
@@ -86,6 +90,7 @@ class ComputerPlayer
     # old_color = get_old_color
     # last_color = get_last_color
     if @intent_number > 2 # for all the rest of tries there is info to compare
+      puts "compare_feedback = #{compare_feedback}"
       case compare_feedback
       when 3
         @code_pos_index -= 1
@@ -111,14 +116,12 @@ class ComputerPlayer
   end
 
   def compare_feedback
-    last_feedback = get_feedback(-1).reduce(Hash.new(0)) do |result, literal|
-      result[literal] += 1
-      result
-    end
-    second_to_last_feedback = get_feedback(-2).reduce(Hash.new(0)) do |result, literal|
-      result[literal] +=1
-      result
-    end
+    base = { "O" => 0, "o" => 0, "." => 0 }
+    last_feedback = base.merge(get_last_feedback.tally)
+    second_to_last_feedback = base.merge(get_old_feedback.tally)
+
+    puts "[compare_feedback] last_feedback = #{last_feedback}"
+    puts "[compare_feedback] second_to_last_feedback = #{second_to_last_feedback}"
 
     if last_feedback[:O] > second_to_last_feedback[:O]
       return 3
