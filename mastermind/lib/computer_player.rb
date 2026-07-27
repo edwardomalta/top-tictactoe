@@ -123,9 +123,9 @@ class ComputerPlayer
     puts "[compare_feedback] last_feedback = #{last_feedback}"
     puts "[compare_feedback] second_to_last_feedback = #{second_to_last_feedback}"
 
-    if last_feedback[:O] > second_to_last_feedback[:O]
+    if last_feedback["O"] > second_to_last_feedback["O"]
       return 3
-    elsif last_feedback[:O] < second_to_last_feedback[:O]
+    elsif last_feedback["O"] < second_to_last_feedback["O"]
       return 4
     else
       return -1
