@@ -39,6 +39,8 @@ class ComputerPlayer
   end
 
   def get_last_guess
+    puts "feedback = #{@feedback}"
+    puts "intent_number = #{@intent_number}"
     @feedback[-1][:code].dup
   end
 
@@ -122,12 +124,14 @@ class ComputerPlayer
     # Debe retornar una lista de enteros limitada a 1-6
     # Contar los intentos para distinguir el primero.
     # puts "First try detected" if first_try?
+    puts "@feedback in try #{@intent_number} is #{@feedback}" if @intent_number >= 1
     code_deduced = first_try? ? gen_code : think_on_evidence
     @intent_number += 1
     return code_deduced
   end
 
   def feedback(result)
+    puts "result = #{result}"
     @feedback ||= []
     @feedback.append(result)
   end

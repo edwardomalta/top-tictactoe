@@ -73,8 +73,9 @@ class Game
     print "Nel, no coinciden peeero... [ " unless @debug
     print feedback.join(" ") unless @debug
     puts " ]" unless @debug
+    puts "user_guesser = #{user_guesser?}"
 
-    @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup }) unless user_guesser?
+    @computer_player.feedback({ feedback: feedback.dup, code: user_guess.dup }) if user_guesser?
   end
 
   # The rule says:
