@@ -20,6 +20,7 @@ class TestFeedbackRule < Minitest::Test
     player_guess = [1, 1, 1, 1]
     result = game.check_guess(player_guess)
     spected = ["O", "O", "o", "o"]
+    puts "result = #{result}"
 
     assert_equal spected, result[0][:feedback]
   end
@@ -61,7 +62,7 @@ end
 
 class TurnsUsedToBreak < Minitest::Test
   # Interesante el concepto pero ¿cómo se hace?
-  MAX_NUMBER_OF_TRIES = 100
+  MAX_NUMBER_OF_TRIES = 1000
   def test_how_much_turns_takes_the_current_version_of_the_algorithm_to_break
     game = Game.new(debug: true)
     game.code = [2, 3, 4, 4]

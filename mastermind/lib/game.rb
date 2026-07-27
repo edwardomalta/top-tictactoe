@@ -15,6 +15,7 @@ class Game
     @has_won = false
     @user_role = ""
     @computer_player = ComputerPlayer.new(@colors)
+    @user_role = "breaker" if @debug
   end
 
   def not_valid?(input)
