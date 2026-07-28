@@ -1,6 +1,7 @@
 # Jugador "Artificial"
+require "pry-byebug"
 class ComputerPlayer
-  attr_accessor :intent_number, :candidates, :code_pos_index
+  attr_accessor :intent_number, :candidates, :code_pos_index, :preset_code
 
   def initialize(colors, debug: false)
     @colors = colors
@@ -93,11 +94,17 @@ class ComputerPlayer
       puts "compare_feedback = #{compare_feedback}"
       case compare_feedback
       when 3
+        # debo fijar el ultimo numero introducido
+        color = get_last_color
+        puts "color = #{color}"
+        # Y con ese numero ahí, movemos el indice al siguiente para que pick_next_code lo rote
         @code_pos_index -= 1
+        
       # new_guess = pick_next_code
       end
     end
     new_guess = pick_next_code
+    puts "el ultimo elemento debe coincidir con el anterior"
     puts "new_guess = #{new_guess}"
     # Creo que todo está muy bonito pero, aunque sea un minimo metodo de fuerza bruta
     # y probar que las posiciones fijadas sean las que tienen que ser, eso estaría cool.
@@ -137,9 +144,11 @@ class ComputerPlayer
     # Debe retornar una lista de enteros limitada a 1-6
     # Contar los intentos para distinguir el primero.
     # puts "First try detected" if first_try?
-    puts "@feedback in try #{@intent_number} is #{@feedback}" if @intent_number >= 1
-    code_deduced = first_try? ? gen_code : think_on_evidence
+    start_code = @preset_code || gen_code
+    code_deduced = first_try? ? start_code : think_on_evidence
     @intent_number += 1
+    puts "@feedback in try #{@intent_number} is #{@feedback}" if @intent_number >= 1
+    # binding.pry
     return code_deduced
   end
 

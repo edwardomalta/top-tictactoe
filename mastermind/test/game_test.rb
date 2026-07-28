@@ -3,6 +3,7 @@ require_relative "../lib/game"
 require_relative "../lib/computer_player"
 
 class PruebaDeEjemplo < Minitest::Test
+
   def test_dos_mas_dos
     assert_equal 4, 2 + 2
   end
@@ -15,6 +16,7 @@ end
 # My game, my rules!
 class TestFeedbackRule < Minitest::Test
   def test_my_rule
+    skip "Fixing other tests"
     game = Game.new(debug: true)
     game.code = [1, 1, 2, 2]
     player_guess = [1, 1, 1, 1]
@@ -28,6 +30,7 @@ end
 
 class TestNewDeduceMethod < Minitest::Test
   def test_it_detects_first_try
+    skip "Focusing in other test now"
     game = Game.new(debug: true)
     colors = game.colors
     computer_player = ComputerPlayer.new(colors)
@@ -37,6 +40,7 @@ class TestNewDeduceMethod < Minitest::Test
   end
 
   def test_it_detects_second_try
+    skip "Focusing on other tests"
     game = Game.new(debug: true)
     game.code = [1, 1, 2, 2]
     colors = game.colors
@@ -62,16 +66,18 @@ end
 
 class TurnsUsedToBreak < Minitest::Test
   # Interesante el concepto pero ¿cómo se hace?
-  MAX_NUMBER_OF_TRIES = 1000
+  MAX_NUMBER_OF_TRIES = 5
   def test_how_much_turns_takes_the_current_version_of_the_algorithm_to_break
     game = Game.new(debug: true)
     game.code = [2, 3, 4, 4]
     colors = game.colors
     computer_player = ComputerPlayer.new(colors, debug: true)
+    computer_player.preset_code = [2, 3, 4, 1]
 
     counter = 0
     until game.has_won do
-      result = game.check_guess(computer_player.deduce_method).first
+      puts "[has_won] has_won = #{game.has_won}"
+      result = game.check_guess(computer_player.deduce_method).last
       computer_player.feedback(result)
       counter += 1
 

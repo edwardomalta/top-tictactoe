@@ -4,7 +4,7 @@ MAX_NUMBER_OF_TRIES = 15
 
 # Main class
 class Game
-  attr_accessor :code, :colors, :has_won
+  attr_accessor :code, :colors, :has_won, :preset_code
 
   def initialize(debug: false)
     @debug = debug
@@ -124,7 +124,7 @@ class Game
   end
 
   def debug_code
-    @code = @computer_player.gen_code
+    @code = @preset_code || @computer_player.gen_code
     puts "El codigo seleccionado es: #{@code}"
   end
 
