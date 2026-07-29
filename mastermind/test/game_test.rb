@@ -16,7 +16,7 @@ end
 # My game, my rules!
 class TestFeedbackRule < Minitest::Test
   def test_my_rule
-    skip "Fixing other tests"
+    # skip "Fixing other tests"
     game = Game.new(debug: true)
     game.code = [1, 1, 2, 2]
     player_guess = [1, 1, 1, 1]
@@ -29,7 +29,7 @@ end
 
 class TestNewDeduceMethod < Minitest::Test
   def test_it_detects_first_try
-    skip "Focusing in other test now"
+    # skip "Focusing in other test now"
     game = Game.new(debug: true)
     colors = game.colors
     computer_player = ComputerPlayer.new(colors)
@@ -39,7 +39,7 @@ class TestNewDeduceMethod < Minitest::Test
   end
 
   def test_it_detects_second_try
-    skip "Focusing on other tests"
+    # skip "Focusing on other tests"
     game = Game.new(debug: true)
     game.code = [1, 1, 2, 2]
     colors = game.colors
