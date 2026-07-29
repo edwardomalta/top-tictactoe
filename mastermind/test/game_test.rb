@@ -65,8 +65,8 @@ end
 
 class TurnsUsedToBreak < Minitest::Test
   # Interesante el concepto pero ¿cómo se hace?
-  MAX_NUMBER_OF_TRIES = 5
-  def test_how_much_turns_takes_the_current_version_of_the_algorithm_to_break
+  MAX_NUMBER_OF_TRIES = 10
+  def test_case_we_found_a_colors_correct_place
     game = Game.new(debug: true)
     game.code = [2, 3, 4, 4]
     colors = game.colors
@@ -84,6 +84,27 @@ class TurnsUsedToBreak < Minitest::Test
                       "filtering is excluding the code at attempt number #{counter}"
       break if counter > MAX_NUMBER_OF_TRIES
     end
-     assert game.has_won, "Did not broke the code in #{MAX_NUMBER_OF_TRIES} tries"
+    assert game.has_won, "Did not broke the code in #{MAX_NUMBER_OF_TRIES} tries"
+  end
+
+  def test_case_we_found_a_colors_correct_place_by_moving_it_from_place
+    game = Game.new(debug: true)
+    game.code = [2, 3, 5, 1]
+    colors = game.colors
+    computer_player = ComputerPlayer.new(colors, debug: true)
+    computer_player.preset_code = [2, 3, 4, 1]
+
+    counter = 0
+    until game.has_won do
+      # require "pry-byebug"; binding.pry
+      result = game.check_guess(computer_player.deduce_method)&.last
+      computer_player.feedback(result)
+      counter += 1
+
+      assert_includes computer_player.candidates, game.code,
+                      "filtering is excluding the code at attempt number #{counter}"
+      break if counter > MAX_NUMBER_OF_TRIES
+    end
+    assert game.has_won, "Did not broke the code in #{MAX_NUMBER_OF_TRIES} tries"
   end
 end

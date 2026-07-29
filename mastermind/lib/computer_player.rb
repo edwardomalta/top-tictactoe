@@ -10,6 +10,7 @@ class ComputerPlayer
     @debug = debug
     @candidates = @combinations.dup
     @code_pos_index = -1
+    @reverse_change = false
   end
 
   def gen_code
@@ -51,10 +52,11 @@ class ComputerPlayer
   end
 
   def pick_next_code
-    last_code = get_last_guess.dup
-    color = last_code[@code_pos_index]
-    last_code[@code_pos_index] = rotate_color(color)
-    return last_code
+    new_code = @reverse_change ? get_old_guess : get_last_guess
+    @reverse_change = false if @reverse_change
+    color = new_code[@code_pos_index]
+    new_code[@code_pos_index] = rotate_color(color)
+    return new_code
   end
 
   def rotate_color(color)
@@ -89,11 +91,14 @@ class ComputerPlayer
       case compare_feedback
       when 3
         # debo fijar el ultimo numero introducido
-        color = get_last_color
         # Y con ese numero ahí, movemos el indice al siguiente para que pick_next_code lo rote
         @code_pos_index -= 1
-        
-      # new_guess = pick_next_code
+        # new_guess = pick_next_code
+      when 4
+        # trae el valor de old a la posición de index actual
+        @reverse_change = true
+        # Movemos al siguiente lugar.
+        @code_pos_index -= 1
       end
     end
     new_guess = pick_next_code
