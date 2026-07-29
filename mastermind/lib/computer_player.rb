@@ -1,5 +1,4 @@
 # Jugador "Artificial"
-require "pry-byebug"
 class ComputerPlayer
   attr_accessor :intent_number, :candidates, :code_pos_index, :preset_code
 
@@ -137,7 +136,8 @@ class ComputerPlayer
     code_deduced = first_try? ? start_code : think_on_evidence
     @intent_number += 1
     puts "@feedback in try #{@intent_number} is #{@feedback}" if @intent_number >= 1
-    # binding.pry
+    # require "pry-byebug"; binding.pry
+
     return code_deduced
   end
 
