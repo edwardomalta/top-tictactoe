@@ -44,8 +44,6 @@ class ComputerPlayer
   end
 
   def get_last_guess
-    puts "feedback = #{@feedback}"
-    puts "intent_number = #{@intent_number}"
     @feedback[-1][:code].dup
   end
 
@@ -56,9 +54,7 @@ class ComputerPlayer
   def pick_next_code
     last_code = get_last_guess.dup
     color = last_code[@code_pos_index]
-    puts "color = #{last_code[@code_pos_index]}"
     last_code[@code_pos_index] = rotate_color(color)
-    puts "last_code = #{last_code}"
     return last_code
   end
 
@@ -91,12 +87,10 @@ class ComputerPlayer
     # old_color = get_old_color
     # last_color = get_last_color
     if @intent_number > 2 # for all the rest of tries there is info to compare
-      puts "compare_feedback = #{compare_feedback}"
       case compare_feedback
       when 3
         # debo fijar el ultimo numero introducido
         color = get_last_color
-        puts "color = #{color}"
         # Y con ese numero ahí, movemos el indice al siguiente para que pick_next_code lo rote
         @code_pos_index -= 1
         
@@ -104,8 +98,6 @@ class ComputerPlayer
       end
     end
     new_guess = pick_next_code
-    puts "el ultimo elemento debe coincidir con el anterior"
-    puts "new_guess = #{new_guess}"
     # Creo que todo está muy bonito pero, aunque sea un minimo metodo de fuerza bruta
     # y probar que las posiciones fijadas sean las que tienen que ser, eso estaría cool.
     # Entonces una forma tonta de hacerlo: correr en bucle hasta encontrar un O.
@@ -126,9 +118,6 @@ class ComputerPlayer
     base = { "O" => 0, "o" => 0, "." => 0 }
     last_feedback = base.merge(get_last_feedback.tally)
     second_to_last_feedback = base.merge(get_old_feedback.tally)
-
-    puts "[compare_feedback] last_feedback = #{last_feedback}"
-    puts "[compare_feedback] second_to_last_feedback = #{second_to_last_feedback}"
 
     if last_feedback["O"] > second_to_last_feedback["O"]
       return 3
@@ -153,7 +142,6 @@ class ComputerPlayer
   end
 
   def feedback(result)
-    puts "result = #{result}"
     @feedback ||= []
     @feedback.append(result)
   end

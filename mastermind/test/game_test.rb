@@ -22,7 +22,6 @@ class TestFeedbackRule < Minitest::Test
     player_guess = [1, 1, 1, 1]
     result = game.check_guess(player_guess)
     spected = ["O", "O", "o", "o"]
-    puts "result = #{result}"
 
     assert_equal spected, result[0][:feedback]
   end
@@ -76,7 +75,6 @@ class TurnsUsedToBreak < Minitest::Test
 
     counter = 0
     until game.has_won do
-      puts "[has_won] has_won = #{game.has_won}"
       require "pry-byebug"; binding.pry
       result = game.check_guess(computer_player.deduce_method)&.last
       computer_player.feedback(result)
