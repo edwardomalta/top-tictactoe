@@ -75,7 +75,7 @@ class TurnsUsedToBreak < Minitest::Test
 
     counter = 0
     until game.has_won do
-      require "pry-byebug"; binding.pry
+      # require "pry-byebug"; binding.pry
       result = game.check_guess(computer_player.deduce_method)&.last
       computer_player.feedback(result)
       counter += 1

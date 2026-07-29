@@ -135,7 +135,6 @@ class ComputerPlayer
     start_code = @preset_code || gen_code
     code_deduced = first_try? ? start_code : think_on_evidence
     @intent_number += 1
-    puts "@feedback in try #{@intent_number} is #{@feedback}" if @intent_number >= 1
     # require "pry-byebug"; binding.pry
 
     return code_deduced
