@@ -14,11 +14,11 @@ class Game
     set_board
   end
 
-  def make_move(position, player)
+  def make_move(position)
     index = position_to_index(position)
     return unless valid_move?(index)
 
-    @board[index] = player
+    @board[index] = current_player
     update_winner
   end
 
@@ -74,8 +74,7 @@ class Game
 
   def start
     loop do
-      valid_move = get_player_move
-      make_move(valid_move, current_player)
+      make_move(get_player_move)
       @display.show_board @board
       if game_over?
         announce_winner
