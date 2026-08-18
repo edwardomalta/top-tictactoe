@@ -4,9 +4,13 @@ require_relative("display")
 # For managing the game logic of tic-tac-toe
 class Game
   attr_reader :board
+  attr_accessor :winner
 
   def initialize
     @display = Display.new
+    @player1 = "X"
+    @player2 = "O"
+    @counter = 1
     set_board
   end
 
@@ -15,6 +19,7 @@ class Game
     return unless valid_move?(index)
 
     @board[index] = player
+    update_winner
   end
 
   def make_lines
@@ -27,56 +32,54 @@ class Game
     end
   end
 
-  def check_winner
-    return false unless @board
+  def update_winner
+    return unless @board
 
     lines = make_lines
-    false unless lines.any? { |line| %w[XXX OOO].include?(line.join) }
-
+    return unless lines.any? { |line| %w[XXX OOO].include?(line.join) }
     lines.each do |line|
       if line.join == "OOO"
         @winner = "O"
-        return true
       elsif line.join == "XXX"
         @winner = "X"
-        return true
       end
     end
   end
 
   def status
     return unless @display || @board
-
-    @display.show_board @board
-    check_winner
-
     return unless @winner
-
     puts "The winner is #{@winner}"
   end
 
-  def start
-    player1 = "X"
-    player2 = "O"
-    counter = 1
+  def get_player_move
     loop do
-      status
-      player = counter.odd? ? player1 : player2
-
-      print "Jugador #{player} escribe una coordenada para mover:"
+      print "Jugador #{current_player} escribe una coordenada para mover:"
       move = gets.chomp
-
       unless valid_move?(position_to_index(move))
         puts "Movimmiento invalido"
         next
       end
+      return move
+    end
+  end
 
-      make_move(move, player)
+  def current_player
+    @counter.odd? ? @player1 : @player2
+  end
 
+  def game_over?
+    !@winner.nil? or @board.none?(" ")
+  end
+
+  def start
+    loop do
+      valid_move = get_player_move
+      make_move(valid_move, current_player)
       @display.show_board @board
       status
-      counter += 1
-      break if @board.none?(" ") || @winner
+      break if game_over?
+      @counter += 1
     end
   end
 
@@ -90,10 +93,6 @@ class Game
     column = position[0].upcase.ord - "A".ord
     row = position[1].to_i - 1
     (row * 3) + column
-  end
-
-  def check_status
-    puts "Checando status"
   end
 
   def valid_move?(index)
