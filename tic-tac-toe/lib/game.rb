@@ -69,7 +69,7 @@ class Game
   end
 
   def game_over?
-    !@winner.nil? or @board.none?(" ")
+    !@winner.nil? or game_tie?
   end
 
   def start
@@ -77,10 +77,25 @@ class Game
       valid_move = get_player_move
       make_move(valid_move, current_player)
       @display.show_board @board
-      status
-      break if game_over?
+      if game_over?
+        announce_winner
+        break
+      end
       @counter += 1
     end
+  end
+
+  def announce_winner
+    return unless game_over?
+    if game_tie?
+      puts "Empataron"
+    else
+      puts "El ganador es #{@winner}"
+    end
+  end
+
+  def game_tie?
+    @board.none?(" ")
   end
 
   private
