@@ -14,6 +14,7 @@ class Game
   end
 
   def start
+    @display.show_board @board
     loop do
       make_move(player_move)
       @display.show_board @board
@@ -54,7 +55,7 @@ class Game
 
   def player_move
     loop do
-      print "Jugador #{current_player} escribe una coordenada para mover:"
+      print "Jugador #{current_player} escribe una coordenada para mover: "
       move = gets.chomp
       unless valid_move?(position_to_index(move))
         puts "Movimmiento invalido"
