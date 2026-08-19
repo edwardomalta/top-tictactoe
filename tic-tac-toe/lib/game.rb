@@ -46,12 +46,6 @@ class Game
     end
   end
 
-  def status
-    return unless @display || @board
-    return unless @winner
-    puts "The winner is #{@winner}"
-  end
-
   def get_player_move
     loop do
       print "Jugador #{current_player} escribe una coordenada para mover:"
