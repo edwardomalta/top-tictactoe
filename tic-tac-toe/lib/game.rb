@@ -4,7 +4,6 @@ require_relative("display")
 # For managing the game logic of tic-tac-toe
 class Game
   attr_reader :board
-  attr_accessor :winner
 
   def initialize
     @display = Display.new
@@ -12,6 +11,18 @@ class Game
     @player2 = "O"
     @counter = 1
     set_board
+  end
+
+  def start
+    loop do
+      make_move(get_player_move)
+      @display.show_board @board
+      if game_over?
+        announce_winner
+        break
+      end
+      @counter += 1
+    end
   end
 
   def make_move(position)
@@ -64,18 +75,6 @@ class Game
 
   def game_over?
     !@winner.nil? or game_tie?
-  end
-
-  def start
-    loop do
-      make_move(get_player_move)
-      @display.show_board @board
-      if game_over?
-        announce_winner
-        break
-      end
-      @counter += 1
-    end
   end
 
   def announce_winner
