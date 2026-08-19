@@ -48,8 +48,4 @@ describe Game do
       expect(result).to eq(8)
     end
   end
-
-  describe "#update_winner" do
-
-  end
 end
