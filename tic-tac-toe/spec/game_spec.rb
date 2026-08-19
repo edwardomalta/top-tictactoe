@@ -9,13 +9,12 @@ describe Game do
     context "receives correct movement" do
       before do
         allow(game_start).to receive(:make_move)
-        allow(game_start).to receive(:get_player_move)
-allow(game_start).to receive(:status)
+        allow(game_start).to receive(:player_move)
         game_start.instance_variable_set(:@display, display_double)
       end
-      it "calls #get_player_move by 3" do
+      it "calls #player_move by 3" do
         allow(game_start).to receive(:game_over?).and_return(false, false, true)
-        expect(game_start).to receive(:get_player_move).exactly(3).times
+        expect(game_start).to receive(:player_move).exactly(3).times
         game_start.start
       end
 
@@ -48,5 +47,9 @@ allow(game_start).to receive(:status)
       result = game_position.position_to_index("c3")
       expect(result).to eq(8)
     end
+  end
+
+  describe "#update_winner" do
+
   end
 end

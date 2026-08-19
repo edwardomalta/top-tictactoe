@@ -15,7 +15,7 @@ class Game
 
   def start
     loop do
-      make_move(get_player_move)
+      make_move(player_move)
       @display.show_board @board
       if game_over?
         announce_winner
@@ -42,10 +42,7 @@ class Game
   end
 
   def update_winner
-    return unless @board
-
     lines = make_lines
-    return unless lines.any? { |line| %w[XXX OOO].include?(line.join) }
     lines.each do |line|
       if line.join == "OOO"
         @winner = "O"
@@ -55,7 +52,7 @@ class Game
     end
   end
 
-  def get_player_move
+  def player_move
     loop do
       print "Jugador #{current_player} escribe una coordenada para mover:"
       move = gets.chomp
