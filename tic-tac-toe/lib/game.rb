@@ -27,8 +27,6 @@ class Game
 
   def make_move(position)
     index = position_to_index(position)
-    return unless valid_move?(index)
-
     @board[index] = current_player
     update_winner
   end
@@ -90,16 +88,16 @@ class Game
     @board.none?(" ")
   end
 
-  private
-
-  def set_board
-    @board = Array.new(9, " ")
-  end
-
   def position_to_index(position)
     column = position[0].upcase.ord - "A".ord
     row = position[1].to_i - 1
     (row * 3) + column
+  end
+
+  private
+
+  def set_board
+    @board = Array.new(9, " ")
   end
 
   def valid_move?(index)

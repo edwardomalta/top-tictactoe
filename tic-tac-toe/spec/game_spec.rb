@@ -37,7 +37,16 @@ allow(game_start).to receive(:status)
     end
   end
 
-  describe "#make_move" do
-    
+  describe "#position_to_index" do
+    subject(:game_position) { described_class.new }
+
+    it "returns 0 for a1" do
+      result = game_position.position_to_index("a1")
+      expect(result).to eq(0)
+    end
+    it "returns 8 for c3" do
+      result = game_position.position_to_index("c3")
+      expect(result).to eq(8)
+    end
   end
 end
