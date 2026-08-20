@@ -60,8 +60,8 @@ describe Game do
       it "is true when there is a line in the board" do
         line_board = [
           "X", "X", "X",
-          "", "", "",
-          "", "", ""
+          " ", " ", " ",
+          " ", " ", " "
         ]
         game_over.instance_variable_set(:@board, line_board)
         game_over.update_winner
@@ -70,15 +70,49 @@ describe Game do
       end
 
       it "is true when there is diagonal too" do
+        line_board = [
+          "O", " ", " ",
+          " ", "O", " ",
+          " ", " ", "O"
+        ]
+        game_over.instance_variable_set(:@board, line_board)
+        game_over.update_winner
+        expect(game_over.game_over?).to be(true)
+        expect(game_over.winner).to eq("O")
       end
 
       it "is true when there is a vertical too" do
+        line_board = [
+          "O", " ", "X",
+          " ", "O", "X",
+          " ", " ", "X"
+        ]
+        game_over.instance_variable_set(:@board, line_board)
+        game_over.update_winner
+        expect(game_over.game_over?).to be(true)
+        expect(game_over.winner).to eq("X")
       end
 
       it "is false when there is not enought marks in the line" do
+        line_board = [
+          "O", " ", " ",
+          " ", "O", " ",
+          " ", " ", " "
+        ]
+        game_over.instance_variable_set(:@board, line_board)
+        game_over.update_winner
+        expect(game_over.game_over?).to be(false)
       end
 
       it "is false if there are mixed marks" do
+        line_board = [
+          "O", " ", " ",
+          " ", "X", " ",
+          " ", " ", "O"
+        ]
+        game_over.instance_variable_set(:@board, line_board)
+        game_over.update_winner
+        expect(game_over.game_over?).to be(false)
       end
     end
   end
